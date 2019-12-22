@@ -1,0 +1,51 @@
+- id: '1576887836118'
+  alias: Turn off everything
+  description: ''
+  trigger:
+  - entity_id: input_boolean.all_lights_off
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - alias: ''
+    data: {}
+    entity_id: script.1576887193430
+    service: script.turn_on
+- id: '1576960385415'
+  alias: Turn On Porch Lights at Sunset
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
+    service: switch.turn_on
+  - entity_id: switch.fireplace
+    service: switch.turn_on
+- id: '1576960531693'
+  alias: Turn off porch lights at 10:30 PM
+  description: ''
+  trigger:
+  - at: '22:30:00'
+    platform: time
+  condition: []
+  action:
+  - entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
+    service: switch.turn_off
+  - entity_id: switch.fireplace
+    service: switch.turn_off
+- id: '1576960986343'
+  alias: Holiday Off
+  description: ''
+  trigger:
+  - at: 00:30:00
+    platform: time
+  condition: []
+  action:
+  - entity_id: switch.christmas_tree
+    service: switch.turn_off
+  - entity_id: switch.garland
+    service: switch.turn_off
+  - entity_id: switch.outdoor_christmas_lights_switch
+    service: switch.turn_off

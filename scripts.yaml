@@ -1,0 +1,51 @@
+'1576887193430':
+  alias: Turn Off Everything
+  sequence:
+  - device_id: 11148f3eea854508b28ce4d112a222eb
+    domain: switch
+    entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
+    type: turn_off
+  - alias: ''
+    data: {}
+    entity_id: light.den_main_lights
+    service: light.turn_off
+  - entity_id: light.dining_room_chandelier
+    service: light.turn_off
+  - entity_id: light.kitchen_main_lights
+    service: light.turn_off
+  - entity_id: light.kitchen_table_lights
+    service: light.turn_off
+  - entity_id: light.living_room_ceiling_fan_light
+    service: light.turn_off
+  - entity_id: light.master_bedroom_ceiling_fan_light
+    service: light.turn_off
+  - device_id: f00afe51bc014b32a28d5d5b384cade3
+    domain: switch
+    entity_id: switch.outdoor_christmas_lights_switch
+    type: turn_off
+  - entity_id: switch.fireplace
+    service: switch.turn_off
+  - entity_id: switch.garland
+    service: switch.turn_off
+  - entity_id: input_boolean.all_lights_off
+    service: input_boolean.turn_off
+  - entity_id: switch.christmas_tree
+    service: switch.turn_off
+'1576960285943':
+  alias: Merry Fucking Christmas
+  sequence:
+  - data: {}
+    entity_id: switch.christmas_tree
+    service: switch.turn_on
+  - entity_id: switch.fireplace
+    service: switch.turn_on
+  - entity_id: switch.garland
+    service: switch.turn_on
+  - entity_id: switch.outdoor_christmas_lights_switch
+    service: switch.turn_on
+'1576960318342':
+  alias: Turn On Porch Lights
+  sequence:
+  - data: {}
+    entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
+    service: switch.turn_on

@@ -1,0 +1,12 @@
+light.den_main_lights:
+  friendly_name: Den Lights
+light.dining_room_chandelier:
+  friendly_name: Dining Room Chandelier
+light.kitchen_main_lights:
+  friendly_name: Kitchen Lights
+light.kitchen_table_lights:
+  friendly_name: Kitchen Table Lights
+light.living_room_ceiling_fan_light:
+  friendly_name: Living Room Ceiling Fan Light
+light.master_bedroom_ceiling_fan_light:
+  friendly_name: Master Bedroom Ceiling Fan Light
