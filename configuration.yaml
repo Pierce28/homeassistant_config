@@ -22,7 +22,7 @@ homeassistant:
     customize: !include customize.yaml
 
 lutron_caseta:
-    host: lutron_host
+    host: !secret lutron_host
     keyfile: /ssl/lutron/caseta.key
     certfile: /ssl/lutron/caseta.crt
     ca_certs: /ssl/lutron/caseta-bridge.crt
