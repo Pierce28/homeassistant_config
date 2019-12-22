@@ -16,27 +16,36 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 frontend:
-    themes: !include_dir_merge_named themes
+  themes: !include_dir_merge_named themes
 
 homeassistant:
-    customize: !include customize.yaml
+  customize: !include customize.yaml
 
 lutron_caseta:
-    host: !secret lutron_host
-    keyfile: /ssl/lutron/caseta.key
-    certfile: /ssl/lutron/caseta.crt
-    ca_certs: /ssl/lutron/caseta-bridge.crt
+  host: !secret lutron_host
+  keyfile: /ssl/lutron/caseta.key
+  certfile: /ssl/lutron/caseta.crt
+  ca_certs: /ssl/lutron/caseta-bridge.crt
 
 cover:
-    - platform: myq
-      username: !secret myq_username
-      password: !secret myq_password
+  - platform: myq
+    username: !secret myq_username
+    password: !secret myq_password
 
 alarm_control_panel:
-    - platform: manual
-
-input_boolean:
-  all_lights_off:
-    name: Turn on everything
-    initial: off
-    icon: mdi:light
+  - platform: manual
+    name: Home Alarm
+    code_arm_required: false
+    pending_time: 0
+    delay_time: 0
+    trigger_time: 0
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+      trigger_time: 0
+    armed_away:
+      pending_time: 0
+      delay_time: 0
+      trigger_time: 0

@@ -1,0 +1,31 @@
+christmas:
+  name: Christmas
+  entities:
+    - switch.christmas_tree
+    - switch.fireplace
+    - switch.garland
+    - switch.outdoor_christmas_lights_switch
+all_lights_including_switches:
+  name: All Lights
+  entities:
+    - switch.christmas_tree
+    - switch.garland
+    - switch.outdoor_christmas_lights_switch
+    - switch.fireplace
+    - light.den_main_lights
+    - light.dining_room_chandelier
+    - light.kitchen_main_lights
+    - light.kitchen_table_lights
+    - light.living_room_ceiling_fan_light
+    - light.master_bedroom_ceiling_fan_light
+    - switch.porch_lights
+exhaust_fans:
+  name: Exhaust Fans
+  entities:
+    - switch.master_bathroom_exhaust_fan
+Door Lcoks:
+  name: Door Locks
+  entities:
+    - lock.front_door_lock_locked
+    - lock.back_door_lock_locked
+    - lock.garage_door_lock_locked

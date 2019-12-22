@@ -1,51 +1,40 @@
-'1576887193430':
+'turn_off_everything':
   alias: Turn Off Everything
   sequence:
-  - device_id: 11148f3eea854508b28ce4d112a222eb
-    domain: switch
-    entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
-    type: turn_off
-  - alias: ''
-    data: {}
-    entity_id: light.den_main_lights
+  - entity_id: group.all_lights
     service: light.turn_off
-  - entity_id: light.dining_room_chandelier
-    service: light.turn_off
-  - entity_id: light.kitchen_main_lights
-    service: light.turn_off
-  - entity_id: light.kitchen_table_lights
-    service: light.turn_off
-  - entity_id: light.living_room_ceiling_fan_light
-    service: light.turn_off
-  - entity_id: light.master_bedroom_ceiling_fan_light
-    service: light.turn_off
-  - device_id: f00afe51bc014b32a28d5d5b384cade3
-    domain: switch
-    entity_id: switch.outdoor_christmas_lights_switch
-    type: turn_off
-  - entity_id: switch.fireplace
+  - entity_id: group.all_switches
     service: switch.turn_off
-  - entity_id: switch.garland
-    service: switch.turn_off
-  - entity_id: input_boolean.all_lights_off
-    service: input_boolean.turn_off
-  - entity_id: switch.christmas_tree
-    service: switch.turn_off
-'1576960285943':
+'merry_xmas':
   alias: Merry Fucking Christmas
   sequence:
   - data: {}
-    entity_id: switch.christmas_tree
+    entity_id: group.christmas
     service: switch.turn_on
-  - entity_id: switch.fireplace
-    service: switch.turn_on
-  - entity_id: switch.garland
-    service: switch.turn_on
-  - entity_id: switch.outdoor_christmas_lights_switch
-    service: switch.turn_on
-'1576960318342':
+'turn_off_porch_lights':
   alias: Turn On Porch Lights
   sequence:
   - data: {}
-    entity_id: switch.jasco_products_12720_outdoor_smart_switch_switch
+    entity_id: switch.porch_lights
     service: switch.turn_on
+'turn_on_everything':
+  alias: Turn On Everything
+  sequence:
+  - entity_id: group.all_lights_including_switches
+    service: switch.turn_on
+  - entity_id: group.all_lights_including_switches
+    service: light.turn_on
+'trigger_alarm_if_not_disarmed':
+  alias: Trigger alarm if not disarmed
+  sequence:
+    - delay: '00:00:10'
+    - condition:
+      condition: or
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+    - service: script.turn_on_everything
