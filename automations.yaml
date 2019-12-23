@@ -75,3 +75,35 @@
   action:
     entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_disarm
+- id: 'house_cleaning_alarm_code_set'
+  alias: House Cleaning Alarm Code Set
+  description: Set House Cleaning Alarm Code on Monday at 7:00 AM
+  trigger: # Run three times to ensure it took
+  - at: '07:00:00'
+    platform: time
+  - at: '07:10:00'
+    platform: time
+  - at: '07:30:00'
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - mon
+  action:
+    service: script.set_cleaning_alarm_code_on_all_locks
+- id: 'house_cleaning_alarm_code_clear'
+  alias: House Cleaning Alarm Code Clear
+  description: Clear House Cleaning Alarm Code on Monday at 5:00 PM
+  trigger: # Run three times to ensure it took
+  - at: '16:00:00'
+    platform: time
+  - at: '16:10:00'
+    platform: time
+  - at: '16:30:00'
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - mon
+  action:
+    service: script.clear_cleaning_alarm_code_on_all_locks

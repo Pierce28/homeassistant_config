@@ -28,8 +28,7 @@
   alias: Trigger alarm if not disarmed
   sequence:
     - delay: '00:00:10'
-    - condition:
-      condition: or
+    - condition: or
       conditions:
       - condition: state
         entity_id: alarm_control_panel.home_alarm
@@ -46,3 +45,45 @@
     data:
       message: "Intrusion Detected! Red alert!"
       title: "Intrusion Alert!"
+'set_cleaning_alarm_code':
+  alias: Set Cleaning Alarm Code
+  sequence:
+    - service: lock.set_usercode
+      data_template:
+        node_id: >-
+          {{ states['lock'][lock].attributes.node_id }}
+        code_slot: 3
+        usercode: !secret cleaning_alarm_code
+'clear_cleaning_alarm_code':
+  alias: Clear Cleaning Alarm Code
+  sequence:
+    - service: lock.set_usercode
+      data_template:
+        node_id: >-
+          {{ states['lock'][lock].attributes.node_id }}
+        code_slot: 3
+        usercode: !secret secondary_alarm_code
+'set_cleaning_alarm_code_on_all_locks':
+  alias: Set Cleaning Alarm Code on all Locks
+  sequence:
+    - service: script.set_cleaning_alarm_code
+      data:
+        lock: 'front_door_lock_locked'
+    - service: script.set_cleaning_alarm_code
+      data:
+        lock: 'back_door_lock_locked'
+    - service: script.set_cleaning_alarm_code
+      data:
+        lock: 'garage_door_lock_locked'
+'clear_cleaning_alarm_code_on_all_locks':
+  alias: Clear Cleaning Alarm Code on all Locks
+  sequence:
+    - service: script.clear_cleaning_alarm_code
+      data:
+        lock: 'front_door_lock_locked'
+    - service: script.clear_cleaning_alarm_code
+      data:
+        lock: 'back_door_lock_locked'
+    - service: script.clear_cleaning_alarm_code
+      data:
+        lock: 'garage_door_lock_locked'
