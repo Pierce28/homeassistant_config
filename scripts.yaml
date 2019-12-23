@@ -38,3 +38,11 @@
         entity_id: alarm_control_panel.home_alarm
         state: armed_home
     - service: script.turn_on_everything
+    - service: script.alarm_alert
+'alarm_alert':
+  alias: Alarm Alert
+  sequence:
+  - service: notify.notify
+    data:
+      message: "Intrusion Detected! Red alert!"
+      title: "Intrusion Alert!"

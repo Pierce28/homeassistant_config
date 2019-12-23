@@ -1,6 +1,6 @@
 - id: 'turn_on_porch_lights_at_sunset'
   alias: Turn On Porch Lights at Sunset
-  description: ''
+  description: 'Turn on the porch lights at sunset'
   trigger:
   - event: sunset
     platform: sun
@@ -12,7 +12,7 @@
     service: switch.turn_on
 - id: 'turn_off_porch_lights_at_night'
   alias: Turn off porch lights at 10:30 PM
-  description: ''
+  description: 'Turn off the porch lights at 10:30 PM'
   trigger:
   - at: '22:30:00'
     platform: time
@@ -24,7 +24,7 @@
     service: switch.turn_off
 - id: 'holiday_off'
   alias: Holiday Off
-  description: ''
+  description: 'Turn off all of the holiday lights'
   trigger:
   - at: 00:30:00
     platform: time
@@ -38,11 +38,40 @@
     service: switch.turn_off
 - id: intrusion detection
   alias: Intrusion Detection
-  description: ''
+  description: 'When a contact sensor detects a door/window opening, trigger the alarm script'
   trigger:
-  - entity_id: binary_sensor.backdoor_contact_sensor_status
+  - entity_id: group.contact_sensors
     from: 'off'
     platform: state
     to: 'on'
   action:
     service: script.trigger_alarm_if_not_disarmed
+- id: 'nightly_arm'
+  alias: Nightly Arm
+  description: 'Arm the alarm at 10:30 PM'
+  trigger:
+  - at: '22:30:00'
+    platform: time
+  condition: []
+  action:
+  - entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_arm_home
+- id: 'disarm_on_unlock'
+  alias: Disarm on Unlock
+  description: 'Disarm the alarm system when a lock is unlocked'
+  trigger:
+  - entity_id: lock.back_door_lock_locked
+    from: locked
+    to: unlocked
+    platform: state
+  - entity_id: lock.front_door_lock_locked
+    from: locked
+    to: unlocked
+    platform: state
+  - entity_id: lock.garage_door_lock_locked # The Schlange FE599 is not reporting its state when manually locked/unlocked :(
+    from: locked
+    to: unlocked
+    platform: state
+  action:
+    entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_disarm

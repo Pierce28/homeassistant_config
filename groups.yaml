@@ -23,9 +23,71 @@ exhaust_fans:
   name: Exhaust Fans
   entities:
     - switch.master_bathroom_exhaust_fan
-Door Lcoks:
+door_locks:
   name: Door Locks
   entities:
     - lock.front_door_lock_locked
     - lock.back_door_lock_locked
     - lock.garage_door_lock_locked
+contact_sensors:
+  name: Contact Sensors
+  entities:
+    - binary_sensor.backdoor_contact_sensor_status
+    - binary_sensor.front_door_contact_sensor_status
+    - binary_sensor.garage_door_contact_sensor_status
+    - binary_sensor.kitchen_window_contact_sensor_status
+    - binary_sensor.left_window_contact_sensor_status
+    - binary_sensor.middle_window_contact_sensor_status
+    - binary_sensor.right_window_contact_sensor_status
+contact_sensors_temperatures:
+  name: Contact Sensor Temperatures
+  entities:
+    - sensor.backdoor_contact_sensor_temperature
+    - sensor.front_door_contact_sensor_temperature
+    - sensor.garage_door_contact_sensor_temperature
+    - sensor.kitchen_window_contact_sensor_temperature
+    - sensor.left_window_contact_sensor_temperature
+    - sensor.middle_window_contact_sensor_temperature
+    - sensor.right_window_contact_sensor_temperature
+contact_sensors_accelerometers:
+  name: Contact Sensor Accelerometers
+  entities:
+    - binary_sensor.backdoor_contact_sensor_accelerometer
+    - binary_sensor.front_door_contact_sensor_accelerometer
+    - binary_sensor.garage_door_contact_sensor_accelerometer
+    - binary_sensor.kitchen_window_contact_sensor_accelerometer
+    - binary_sensor.left_window_contact_sensor_accelerometer
+    - binary_sensor.middle_window_contact_sensor_accelerometer
+    - binary_sensor.right_window_contact_sensor_accelerometer
+battery_status:
+  name: Battery Status
+  entities:
+    - sensor.backdoor_contact_sensor_battery
+    - sensor.front_door_contact_sensor_battery
+    - sensor.garage_door_contact_sensor_battery
+    - sensor.kitchen_window_contact_sensor_battery
+    - sensor.left_window_contact_sensor_battery
+    - sensor.middle_window_contact_sensor_battery
+    - sensor.right_window_contact_sensor_battery
+    - sensor.back_door_lock_battery_level
+    - sensor.garage_door_lock_battery_level
+    - sensor.front_door_lock_battery_level
+lock_etc:
+  name: Lock Data
+  entities:
+    - sensor.back_door_lock_access_control
+    - sensor.front_door_lock_access_control
+    - sensor.back_door_lock_alarm_level
+    - sensor.front_door_lock_alarm_level
+    - sensor.garage_door_lock_alarm_level
+    - sensor.back_door_lock_alarm_type
+    - sensor.front_door_lock_alarm_type
+    - sensor.garage_door_lock_alarm_type
+    - sensor.front_door_lock_burglar
+    - sensor.back_door_lock_burglar
+    - sensor.front_door_lock_power_management
+    - sensor.back_door_lock_power_management
+    - sensor.front_door_lock_system
+    - sensor.back_door_lock_system
+    - sensor.front_door_lock_sourcenodeid
+    - sensor.back_door_lock_sourcenodeid
