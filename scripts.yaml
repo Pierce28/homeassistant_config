@@ -38,6 +38,7 @@
         state: armed_home
     - service: script.turn_on_everything
     - service: script.alarm_alert
+    - service: script.alexa_red_alert_message
 'alarm_alert':
   alias: Alarm Alert
   sequence:
@@ -87,3 +88,34 @@
     - service: script.clear_cleaning_alarm_code
       data:
         lock: 'garage_door_lock_locked'
+'alexa_red_alert_message':
+  alias: Alexa Red Alert Message
+  sequence:
+    - condition: or
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_away
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+    - service: notify.alexa_media
+      data:
+        message: "Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert!"
+        title: "Red Alert"
+        data:
+          type: announce
+          method: all
+        target:
+          - "Pierce's Echo Show"
+          - "Bathroom Echo"
+    - service: script.turn_off
+      entity_id: script.alexa_red_alert_broadcast_loop
+    - service: script.alexa_red_alert_broadcast_loop
+'alexa_red_alert_broadcast_loop':
+  alias: Alexa Red Alert Broadcast Loop
+  sequence:
+    - delay: '00:00:30'
+    - service: script.turn_off
+      entity_id: script.alexa_red_alert_message
+    - service: script.alexa_red_alert_message
