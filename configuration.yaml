@@ -23,9 +23,9 @@ homeassistant:
 
 lutron_caseta:
   host: !secret lutron_host
-  keyfile: /ssl/lutron/caseta.key
-  certfile: /ssl/lutron/caseta.crt
-  ca_certs: /ssl/lutron/caseta-bridge.crt
+  keyfile: /home/pierce/ssl/lutron/caseta.key
+  certfile: /home/pierce/ssl/lutron/caseta.crt
+  ca_certs: /home/pierce/ssl/lutron/caseta-bridge.crt
 
 cover:
   - platform: myq
