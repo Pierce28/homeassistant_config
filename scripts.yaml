@@ -1,9 +1,9 @@
 'turn_off_everything':
   alias: Turn Off Everything
   sequence:
-  - entity_id: group.all_lights
+  - entity_id: group.all_lights_including_switches
     service: light.turn_off
-  - entity_id: group.all_switches
+  - entity_id: group.all_lights_including_switches
     service: switch.turn_off
 'merry_xmas':
   alias: Merry Fucking Christmas
