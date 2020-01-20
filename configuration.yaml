@@ -62,7 +62,7 @@ alexa_media:
 speedtestdotnet:
   server_id: 14734
   scan_interval:
-    minutes: 30
+    minutes: 180
   monitored_conditions:
       - ping
       - download
