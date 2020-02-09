@@ -107,3 +107,23 @@
     - mon
   action:
     service: script.clear_cleaning_alarm_code_on_all_locks
+- id: 'ios_lockup'
+  alias: iOS Lockup
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'Arm System'
+  action:
+    entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_arm_home
+- id: 'ios_unlock'
+  alias: iOS unlock
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'Disarm System'
+  action:
+    entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_disarm
