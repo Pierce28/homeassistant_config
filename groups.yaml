@@ -14,11 +14,11 @@ all_lights_including_switches:
     - switch.fireplace
     - light.den_main_lights
     - light.dining_room_chandelier
-    - light.kitchen_main_lights
-    - light.kitchen_table_lights
+    - light.kitchen_lights
     - light.living_room_ceiling_fan_light
     - light.master_bedroom_ceiling_fan_light
     - switch.porch_lights
+    - switch.front_porch_decorations_switch
 exhaust_fans:
   name: Exhaust Fans
   entities:

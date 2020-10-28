@@ -1,121 +1,162 @@
-'turn_off_everything':
+turn_off_everything:
   alias: Turn Off Everything
   sequence:
   - entity_id: group.all_lights_including_switches
     service: light.turn_off
   - entity_id: group.all_lights_including_switches
     service: switch.turn_off
-'merry_xmas':
+merry_xmas:
   alias: Merry Fucking Christmas
   sequence:
   - data: {}
     entity_id: group.christmas
     service: switch.turn_on
-'turn_off_porch_lights':
+turn_off_porch_lights:
   alias: Turn On Porch Lights
   sequence:
   - data: {}
     entity_id: switch.porch_lights
     service: switch.turn_on
-'turn_on_everything':
+turn_on_everything:
   alias: Turn On Everything
   sequence:
   - entity_id: group.all_lights_including_switches
     service: switch.turn_on
   - entity_id: group.all_lights_including_switches
     service: light.turn_on
-'trigger_alarm_if_not_disarmed':
+trigger_alarm_if_not_disarmed:
   alias: Trigger alarm if not disarmed
   sequence:
-    - delay: '00:00:10'
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_away
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_home
-    - service: script.turn_on_everything
-    - service: script.alarm_alert
-    - service: script.alexa_red_alert_message
-'alarm_alert':
+  - delay: 00:00:10
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_home
+  - service: script.turn_on_everything
+  - service: script.alarm_alert
+  - service: script.alexa_red_alert_message
+alarm_alert:
   alias: Alarm Alert
   sequence:
   - service: notify.notify
     data:
-      message: "Intrusion Detected! Red alert!"
-      title: "Intrusion Alert!"
-'set_cleaning_alarm_code':
+      message: Intrusion Detected! Red alert!
+      title: Intrusion Alert!
+set_cleaning_alarm_code:
   alias: Set Cleaning Alarm Code
   sequence:
-    - service: lock.set_usercode
-      data_template:
-        node_id: >-
-          {{ states['lock'][lock].attributes.node_id }}
-        code_slot: 3
-        usercode: !secret cleaning_alarm_code
-'clear_cleaning_alarm_code':
+  - service: lock.set_usercode
+    data_template:
+      node_id: '{{ states[''lock''][lock].attributes.node_id }}'
+      code_slot: 3
+      usercode: 9090
+clear_cleaning_alarm_code:
   alias: Clear Cleaning Alarm Code
   sequence:
-    - service: lock.set_usercode
-      data_template:
-        node_id: >-
-          {{ states['lock'][lock].attributes.node_id }}
-        code_slot: 3
-        usercode: !secret secondary_alarm_code
-'set_cleaning_alarm_code_on_all_locks':
+  - service: lock.set_usercode
+    data_template:
+      node_id: '{{ states[''lock''][lock].attributes.node_id }}'
+      code_slot: 3
+      usercode: 1587
+set_cleaning_alarm_code_on_all_locks:
   alias: Set Cleaning Alarm Code on all Locks
   sequence:
-    - service: script.set_cleaning_alarm_code
-      data:
-        lock: 'front_door_lock_locked'
-    - service: script.set_cleaning_alarm_code
-      data:
-        lock: 'back_door_lock_locked'
-    - service: script.set_cleaning_alarm_code
-      data:
-        lock: 'garage_door_lock_locked'
-'clear_cleaning_alarm_code_on_all_locks':
+  - service: script.set_cleaning_alarm_code
+    data:
+      lock: front_door_lock_locked
+  - service: script.set_cleaning_alarm_code
+    data:
+      lock: back_door_lock_locked
+  - service: script.set_cleaning_alarm_code
+    data:
+      lock: garage_door_lock_locked
+clear_cleaning_alarm_code_on_all_locks:
   alias: Clear Cleaning Alarm Code on all Locks
   sequence:
-    - service: script.clear_cleaning_alarm_code
-      data:
-        lock: 'front_door_lock_locked'
-    - service: script.clear_cleaning_alarm_code
-      data:
-        lock: 'back_door_lock_locked'
-    - service: script.clear_cleaning_alarm_code
-      data:
-        lock: 'garage_door_lock_locked'
-'alexa_red_alert_message':
+  - service: script.clear_cleaning_alarm_code
+    data:
+      lock: front_door_lock_locked
+  - service: script.clear_cleaning_alarm_code
+    data:
+      lock: back_door_lock_locked
+  - service: script.clear_cleaning_alarm_code
+    data:
+      lock: garage_door_lock_locked
+alexa_red_alert_message:
   alias: Alexa Red Alert Message
   sequence:
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_away
-      - condition: state
-        entity_id: alarm_control_panel.home_alarm
-        state: armed_home
-    - service: notify.alexa_media
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_home
+  - service: notify.alexa_media
+    data:
+      message: Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion
+        detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red
+        alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion
+        detected! Red alert!
+      title: Red Alert
       data:
-        message: "Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert! Intrusion detected! Red alert!"
-        title: "Red Alert"
-        data:
-          type: announce
-          method: all
-        target:
-          - "Pierce's Echo Show"
-          - "Bathroom Echo"
-    - service: script.turn_off
-      entity_id: script.alexa_red_alert_broadcast_loop
-    - service: script.alexa_red_alert_broadcast_loop
-'alexa_red_alert_broadcast_loop':
+        type: announce
+        method: all
+      target:
+      - Pierce's Echo Show
+      - Bathroom Echo
+  - service: script.turn_off
+    entity_id: script.alexa_red_alert_broadcast_loop
+  - service: script.alexa_red_alert_broadcast_loop
+alexa_red_alert_broadcast_loop:
   alias: Alexa Red Alert Broadcast Loop
   sequence:
-    - delay: '00:00:30'
-    - service: script.turn_off
-      entity_id: script.alexa_red_alert_message
-    - service: script.alexa_red_alert_message
+  - delay: 00:00:30
+  - service: script.turn_off
+    entity_id: script.alexa_red_alert_message
+  - service: script.alexa_red_alert_message
+set_guest_alarm_code:
+  alias: Set Guest Alarm Code
+  sequence:
+  - service: lock.set_usercode
+    data_template:
+      node_id: '{{ states[''lock''][lock].attributes.node_id }}'
+      code_slot: 4
+      usercode: '1115'
+clear_guest_alarm_code:
+  alias: Clear Guest Alarm Code
+  sequence:
+  - service: lock.set_usercode
+    data_template:
+      node_id: '{{ states[''lock''][lock].attributes.node_id }}'
+      code_slot: 4
+      usercode: 1587
+set_guest_alarm_code_on_all_locks:
+  alias: Set Guest Alarm Code on all Locks
+  sequence:
+  - service: script.set_guest_alarm_code
+    data:
+      lock: front_door_lock_locked
+  - service: script.set_guest_alarm_code
+    data:
+      lock: back_door_lock_locked
+  - service: script.set_guest_alarm_code
+    data:
+      lock: garage_door_lock_locked
+clear_guest_alarm_code_on_all_locks:
+  alias: Clear Guest Alarm Code on all Locks
+  sequence:
+  - service: script.clear_guest_alarm_code
+    data:
+      lock: front_door_lock_locked
+  - service: script.clear_guest_alarm_code
+    data:
+      lock: back_door_lock_locked
+  - service: script.clear_guest_alarm_code
+    data:
+      lock: garage_door_lock_locked

@@ -1,6 +1,6 @@
-- id: 'turn_on_porch_lights_at_sunset'
+- id: turn_on_porch_lights_at_sunset
   alias: Turn On Porch Lights at Sunset
-  description: 'Turn on the porch lights at sunset'
+  description: Turn on the porch lights at sunset
   trigger:
   - event: sunset
     platform: sun
@@ -10,9 +10,9 @@
     service: switch.turn_on
   - entity_id: switch.fireplace
     service: switch.turn_on
-- id: 'turn_off_porch_lights_at_night'
+- id: turn_off_porch_lights_at_night
   alias: Turn off porch lights at 10:30 PM
-  description: 'Turn off the porch lights at 10:30 PM'
+  description: Turn off the porch lights at 10:30 PM
   trigger:
   - at: '22:30:00'
     platform: time
@@ -22,23 +22,27 @@
     service: switch.turn_off
   - entity_id: switch.fireplace
     service: switch.turn_off
-- id: 'holiday_off'
+- id: holiday_off
   alias: Holiday Off
-  description: 'Turn off all of the holiday lights'
+  description: Turn off all of the holiday decorations
   trigger:
-  - at: 00:30:00
+  - at: 00:00:00
     platform: time
   condition: []
   action:
-  - entity_id: switch.christmas_tree
-    service: switch.turn_off
-  - entity_id: switch.garland
-    service: switch.turn_off
-  - entity_id: switch.outdoor_christmas_lights_switch
-    service: switch.turn_off
+  - device_id: b45cc19e1acd4d00b5239f92a9479d54
+    domain: switch
+    entity_id: switch.front_porch_decorations_switch
+    type: turn_off
+  - device_id: f00afe51bc014b32a28d5d5b384cade3
+    domain: switch
+    entity_id: switch.outdoor_christmas_lights_switch
+    type: turn_off
+  mode: single
 - id: intrusion detection
   alias: Intrusion Detection
-  description: 'When a contact sensor detects a door/window opening, trigger the alarm script'
+  description: When a contact sensor detects a door/window opening, trigger the alarm
+    script
   trigger:
   - entity_id: group.contact_sensors
     from: 'off'
@@ -46,9 +50,9 @@
     to: 'on'
   action:
     service: script.trigger_alarm_if_not_disarmed
-- id: 'nightly_arm'
+- id: nightly_arm
   alias: Nightly Arm
-  description: 'Arm the alarm at 10:30 PM'
+  description: Arm the alarm at 10:30 PM
   trigger:
   - at: '22:30:00'
     platform: time
@@ -56,9 +60,9 @@
   action:
   - entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_arm_home
-- id: 'disarm_on_unlock'
+- id: disarm_on_unlock
   alias: Disarm on Unlock
-  description: 'Disarm the alarm system when a lock is unlocked'
+  description: Disarm the alarm system when a lock is unlocked
   trigger:
   - entity_id: lock.back_door_lock_locked
     from: locked
@@ -68,22 +72,22 @@
     from: locked
     to: unlocked
     platform: state
-  - entity_id: lock.garage_door_lock_locked # The Schlange FE599 is not reporting its state when manually locked/unlocked :(
+  - entity_id: lock.garage_door_lock_locked
     from: locked
     to: unlocked
     platform: state
   action:
     entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_disarm
-- id: 'house_cleaning_alarm_code_set'
+- id: house_cleaning_alarm_code_set
   alias: House Cleaning Alarm Code Set
   description: Set House Cleaning Alarm Code on Monday at 7:00 AM
-  trigger: # Run three times to ensure it took
-  - at: '07:00:00'
+  trigger:
+  - at: 07:00:00
     platform: time
-  - at: '07:10:00'
+  - at: 07:10:00
     platform: time
-  - at: '07:30:00'
+  - at: 07:30:00
     platform: time
   condition:
   - condition: time
@@ -91,10 +95,10 @@
     - mon
   action:
     service: script.set_cleaning_alarm_code_on_all_locks
-- id: 'house_cleaning_alarm_code_clear'
+- id: house_cleaning_alarm_code_clear
   alias: House Cleaning Alarm Code Clear
   description: Clear House Cleaning Alarm Code on Monday at 5:00 PM
-  trigger: # Run three times to ensure it took
+  trigger:
   - at: '16:00:00'
     platform: time
   - at: '16:10:00'
@@ -107,23 +111,78 @@
     - mon
   action:
     service: script.clear_cleaning_alarm_code_on_all_locks
-- id: 'ios_lockup'
+- id: ios_lockup
   alias: iOS Lockup
   trigger:
-    - platform: event
-      event_type: ios.action_fired
-      event_data:
-        actionName: 'Arm System'
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: Arm System
   action:
     entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_arm_home
-- id: 'ios_unlock'
+- id: ios_unlock
   alias: iOS unlock
   trigger:
-    - platform: event
-      event_type: ios.action_fired
-      event_data:
-        actionName: 'Disarm System'
+  - platform: event
+    event_type: ios.action_fired
+    event_data:
+      actionName: Disarm System
   action:
     entity_id: alarm_control_panel.home_alarm
     service: alarm_control_panel.alarm_disarm
+- id: '1598118401961'
+  alias: Peloton Automation - Turn On
+  description: ''
+  trigger:
+  - entity_id: input_boolean.peloton
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - device_id: 350d24677a56430c86544c3f6e6d74d7
+    domain: switch
+    entity_id: switch.peloton_fan
+    type: turn_on
+  - device_id: a97d03ed6e5a42f99d66a418beec7a67
+    domain: switch
+    entity_id: switch.peloton_speakers
+    type: turn_on
+  mode: single
+- id: '1598118460017'
+  alias: Peloton Automation - Turn Off
+  description: ''
+  trigger:
+  - entity_id: input_boolean.peloton
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - device_id: 350d24677a56430c86544c3f6e6d74d7
+    domain: switch
+    entity_id: switch.peloton_fan
+    type: turn_off
+  - device_id: a97d03ed6e5a42f99d66a418beec7a67
+    domain: switch
+    entity_id: switch.peloton_speakers
+    type: turn_off
+  mode: single
+- id: '1601749145171'
+  alias: Holiday On
+  description: Turns on the holiday decorations
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - device_id: f00afe51bc014b32a28d5d5b384cade3
+    domain: switch
+    entity_id: switch.outdoor_christmas_lights_switch
+    type: turn_on
+  - device_id: b45cc19e1acd4d00b5239f92a9479d54
+    domain: switch
+    entity_id: switch.front_porch_decorations_switch
+    type: turn_on
+  mode: single

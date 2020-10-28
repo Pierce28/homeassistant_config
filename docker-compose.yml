@@ -1,0 +1,16 @@
+version: '3'
+services:
+  homeassistant:
+    container_name: home-assistant
+    image: homeassistant/home-assistant:stable
+    volumes:
+      - /home/pierce/.homeassistant:/config
+      - /home/pierce/ssl/lutron:/home/pierce/ssl/lutron
+    devices:
+      - /dev/serial/by-id/usb-0658_0200-if00:/dev/serial/by-id/usb-0658_0200-if00
+      - /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2129724-if00:/dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2129724-if00
+    environment:
+      - TZ=America/New_York
+    restart: always
+    network_mode: host
+    privileged: true

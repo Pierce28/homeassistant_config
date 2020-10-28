@@ -36,33 +36,24 @@ alarm_control_panel:
   - platform: manual
     name: Home Alarm
     code_arm_required: false
-    pending_time: 0
+    arming_time: 0
     delay_time: 0
     trigger_time: 0
     disarmed:
       trigger_time: 0
     armed_home:
-      pending_time: 0
+      arming_time: 0
       delay_time: 0
       trigger_time: 0
     armed_away:
-      pending_time: 0
+      arming_time: 0
       delay_time: 0
       trigger_time: 0
-
-alexa_media:
-  accounts:
-    - email: !secret amazon_email
-      password: !secret amazon_password
-      url: !secret amazon_url
-      include_devices:
-      - "Pierce's Echo Show"
-      - "Bathroom Echo"
 
 speedtestdotnet:
   server_id: 14734
   scan_interval:
-    minutes: 360
+    minutes: 30
   monitored_conditions:
       - ping
       - download
@@ -83,13 +74,13 @@ sensor:
         arg: '/'
       - type: last_boot
       - type: network_in
-        arg: 'wlp39s0'
+        arg: 'wlp40s0'
       - type: network_out
-        arg: 'wlp39s0'
+        arg: 'wlp40s0'
       - type: throughput_network_in
-        arg: 'wlp39s0'
+        arg: 'wlp40s0'
       - type: throughput_network_out
-        arg: 'wlp39s0'
+        arg: 'wlp40s0'
   - platform: command_line
     name: CPU Temperature
     command: "cat /sys/class/thermal/thermal_zone0/temp"
