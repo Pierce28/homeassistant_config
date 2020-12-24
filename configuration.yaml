@@ -50,15 +50,6 @@ alarm_control_panel:
       delay_time: 0
       trigger_time: 0
 
-speedtestdotnet:
-  server_id: 14734
-  scan_interval:
-    minutes: 30
-  monitored_conditions:
-      - ping
-      - download
-      - upload
-
 sensor:
   - platform: systemmonitor
     resources:
@@ -86,3 +77,31 @@ sensor:
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
+  - platform: command_line
+    name: Speed Test
+    command: 'ssh -l pierce 192.168.1.238 "speedtest -f json"'
+    scan_interval: 1800
+    json_attributes:
+      - ping
+      - download
+      - upload
+      - interface
+    value_template: '{{ value_json.value }}'
+  - platform: template
+    sensors:
+      download:
+        friendly_name: "Download"
+        value_template: '{{ states.sensor.speed_test.attributes["download"]["bandwidth"] / 125000 | round(1) }}'
+      upload:
+        friendly_name: "Upload"
+        value_template: '{{ states.sensor.speed_test.attributes["upload"]["bandwidth"] / 125000 | round(1) }}'
+      ping:
+        friendly_name: "Ping"
+        value_template: '{{ states.sensor.speed_test.attributes["ping"]["latency"] }}'
+      jitter:
+        friendly_name: "Jitter"
+        value_template: '{{ states.sensor.speed_test.attributes["ping"]["jitter"] }}'
+      external_ip_address:
+        friendly_name: "External IP"
+        value_template: '{{ states.sensor.speed_test.attributes["interface"]["externalIp"] }}'
+
